@@ -1,8 +1,5 @@
 package com.example;
 
-/**
- * Created by jiezhang on 1/2/17.
- */
 public class Greeting {
 
     private final long id;
@@ -19,6 +16,11 @@ public class Greeting {
 
     public String getContent() {
         return content;
+    }
+
+    @Override
+    public String toString() {
+        return String.valueOf(id) + " " + content;
     }
 }
 
