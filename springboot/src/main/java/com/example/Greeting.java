@@ -34,7 +34,10 @@ public class Greeting {
 
     @Override
     public String toString() {
-        return "<h1>" + content + "</h1><h2>" + builtTime + "</h2><p>" + quote.getValue().getQuote() + "</p>";
+        return "<h1>" + content
+                + "</h1><h2>" + builtTime
+                + "</h2><p>" + quote.getValue().getQuote()
+                + "</p>";
     }
 }
 
