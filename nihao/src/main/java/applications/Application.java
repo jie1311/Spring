@@ -1,4 +1,4 @@
-package application;
+package applications;
 
 import entities.Type;
 import org.springframework.boot.CommandLineRunner;
@@ -6,10 +6,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
-import repository.TypeRepository;
+import repositories.TypeRepository;
 
 @SpringBootApplication
-@EnableMongoRepositories(basePackages = {"repository"})
+@EnableMongoRepositories(basePackages = {"repositories"})
 public class Application implements CommandLineRunner {
 
 	@Autowired
