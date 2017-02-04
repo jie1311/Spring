@@ -1,6 +1,5 @@
 package application;
 
-import entities.Aircraft;
 import entities.Airport;
 
 public class Calculator {

@@ -48,4 +48,8 @@ public class Airport {
     public void setCoordinate(double[] coordinate) {
         this.coordinate = coordinate;
     }
+
+    public String getAirport() {
+        return String.format("%s %s", iataCode, city);
+    }
 }
