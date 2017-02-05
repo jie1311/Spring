@@ -8,4 +8,6 @@ public interface AircraftRepository extends MongoRepository<Aircraft, String> {
 
     public List<Aircraft> findByManufacturer(String manufacturer);
     public Aircraft findById(String id);
+    public List<Aircraft> findByManufacturerAndModelAndSubModel(String manufacturer, String model, String subModel);
+
 }
