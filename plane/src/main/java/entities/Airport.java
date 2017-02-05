@@ -11,6 +11,9 @@ public class Airport {
     private String city;
     private double[] coordinate;
 
+    public Airport() {
+    }
+
     public Airport(String iataCode, String city, double[] coordinate) {
         this.iataCode = iataCode;
         this.city = city;

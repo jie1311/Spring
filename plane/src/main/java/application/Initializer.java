@@ -38,6 +38,7 @@ public class Initializer implements CommandLineRunner {
         aircraftRepository.save(new Aircraft("Airbus", "A350", "900", 15000));
         aircraftRepository.save(new Aircraft("Airbus", "A350", "900ULR", 16120));
         aircraftRepository.save(new Aircraft("Airbus", "A350", "1000", 14800));
+        aircraftRepository.save(new Aircraft("Boeing", "777", "300ER", 13650));
 
         for (Aircraft aircraft : aircraftRepository.findAll()) {
             System.out.println(aircraft.getType());
@@ -58,7 +59,7 @@ public class Initializer implements CommandLineRunner {
             System.out.println(airport.getCity());
         }
 
-        System.out.println(distanceOf("MEL", "LHR"));
+        //System.out.println(distanceOf("MEL", "LHR"));
     }
 
     public int distanceOf(String orgIata, String desIata){

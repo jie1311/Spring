@@ -10,8 +10,6 @@ import repositories.AircraftRepository;
 
 import java.util.ArrayList;
 
-
-
 @Controller
 public class AircraftController {
 
@@ -19,13 +17,18 @@ public class AircraftController {
     private AircraftRepository repository;
 
     @RequestMapping("/aircraft")
-    public String aircraft(@RequestParam(value="manufacturer", required=false, defaultValue="All") String manufacturer, Model model) {
+    public String aircraft(@RequestParam(value="manufacturer", required=false, defaultValue="all") String manufacturer, Model model) {
         ArrayList airs = new ArrayList<>();
-        for (Aircraft aircraft : repository.findAll()){
-            airs.add(aircraft.getType());
+        if (manufacturer.equals("all")) {
+            for (Aircraft aircraft : repository.findAll()) {
+                airs.add(aircraft.getType());
+            }
+        } else {
+            for (Aircraft aircraft : repository.findByManufacturer(manufacturer)) {
+                airs.add(aircraft.getType());
+            }
         }
         model.addAttribute("airs", airs);
-        System.out.println(model);
         return "aircraft";
     }
 }

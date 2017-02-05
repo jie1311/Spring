@@ -15,7 +15,7 @@ apply plugin: 'eclipse'
 apply plugin: 'org.springframework.boot'
 
 jar {
-	baseName = 'planroute'
+	baseName = 'validating'
 	version = '0.0.1-SNAPSHOT'
 }
 
@@ -27,10 +27,8 @@ repositories {
 
 
 dependencies {
-	compile('org.springframework.boot:spring-boot-starter-data-mongodb')
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile("org.springframework.boot:spring-boot-starter-thymeleaf")
 	compile("org.hibernate:hibernate-validator")
-	compile("org.apache.tomcat.embed:tomcat-embed-el")
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }

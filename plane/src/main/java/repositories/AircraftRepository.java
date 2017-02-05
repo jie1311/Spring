@@ -7,4 +7,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 public interface AircraftRepository extends MongoRepository<Aircraft, String> {
 
     public List<Aircraft> findByManufacturer(String manufacturer);
+    public Aircraft findById(String id);
 }

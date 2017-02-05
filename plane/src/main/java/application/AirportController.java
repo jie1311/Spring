@@ -23,7 +23,6 @@ public class AirportController {
             airs.add(airport.getAirport());
         }
         model.addAttribute("airs", airs);
-        System.out.println(model);
         return "airport";
     }
 }

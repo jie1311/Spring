@@ -12,11 +12,18 @@ public class Aircraft {
     private String subModel;
     private int range;
 
+    public Aircraft() {
+    }
+
     public Aircraft(String manufacturer, String model, String subModel, int range) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.subModel = subModel;
         this.range = range;
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getManufacturer() {
