@@ -15,6 +15,7 @@ import repositories.AirportRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.List;
 
 @Controller
 public class CompareCotroller {
@@ -32,14 +33,23 @@ public class CompareCotroller {
 
     @PostMapping("/compare")
     public String compareRange(@Valid CompareForm compareForm, BindingResult bindingResult , Model model){
-        int range = aircraftRepository.findById(compareForm.getAircraftId()).getRange();
+        Aircraft aircraft = aircraftRepository.findById(compareForm.getAircraftId());
         Airport org = airportRepository.findById(compareForm.getOrgAirportId());
         Airport des = airportRepository.findById(compareForm.getDesAirportId());
-        int distance = Calculator.range(org, des);
-        if (range > distance) {
+        if (Calculator.reachable(org, des, aircraft)) {
             model.addAttribute("reachable", "Yes.");
         } else {
-            model.addAttribute("reachable", "No.");
+            List route = searchResult(org, org, des, aircraft, new ArrayList<>());
+            String routeString = "";
+            for (Airport via : (ArrayList<Airport>) route) {
+                routeString += String.format("-%s", via.getIataCode());
+            }
+            if (route.isEmpty()){
+                routeString = "No.";
+            } else {
+                routeString = String.format("No. %s%s-%s is available.",org.getIataCode(), routeString, des.getIataCode());
+            }
+            model.addAttribute("reachable", routeString);
         }
         initialPage(model);
         return "compare";
@@ -59,4 +69,34 @@ public class CompareCotroller {
         model.addAttribute("airports", airports);
     }
 
+    private List reachableAirports(Airport org, Aircraft aircraft) {
+        List airports = new ArrayList<>();
+        for (Airport des : airportRepository.findAll()) {
+            if (Calculator.reachable(org, des, aircraft) && !org.getId().equals(des.getId())) {
+                airports.add(des);
+            }
+        }
+        return airports;
+    }
+
+    private List<Airport> searchResult(Airport org, Airport via, Airport des, Aircraft aircraft, List result) {
+        List<Airport> available = reachableAirports(via, aircraft);
+        boolean found = false;
+        for (Airport via2 : available) {
+            if (des.getId().equals(via2.getId())) {
+                result.add(via);
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            for (Airport via2 : available){
+                if (!org.getId().equals(via2.getId())) {
+                    searchResult(org, via2, des, aircraft, result);
+                    break;
+                }
+            }
+        }
+        return result;
+    }
 }

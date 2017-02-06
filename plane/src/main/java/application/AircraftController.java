@@ -13,6 +13,7 @@ import repositories.AircraftRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @Controller
 public class AircraftController {
@@ -33,10 +34,11 @@ public class AircraftController {
                 aircraftForm.getManufacturer(),
                 aircraftForm.getModel(),
                 aircraftForm.getSubModel()).isEmpty()) {
+
             repository.save(new Aircraft(aircraftForm.getManufacturer().trim(),
                                          aircraftForm.getModel().trim(),
                                          aircraftForm.getSubModel().trim(),
-                    Integer.valueOf(aircraftForm.getRange())));
+                                         Integer.valueOf(aircraftForm.getRange())));
             model.addAttribute("added", "Aircraft added.");
         } else {
             model.addAttribute("added", "Aircraft not added.");
@@ -49,13 +51,14 @@ public class AircraftController {
         ArrayList airs = new ArrayList<>();
         if (manufacturer.equals("all")) {
             for (Aircraft aircraft : repository.findAll()) {
-                airs.add(aircraft.getType());
+                airs.add(aircraft);
             }
         } else {
             for (Aircraft aircraft : repository.findByManufacturer(manufacturer)) {
-                airs.add(aircraft.getType());
+                airs.add(aircraft);
             }
         }
+
         model.addAttribute("airs", airs);
         model.addAttribute("aircraftForm", new AircraftForm());
     }

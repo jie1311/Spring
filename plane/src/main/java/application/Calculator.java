@@ -1,10 +1,11 @@
 package application;
 
+import entities.Aircraft;
 import entities.Airport;
 
 public class Calculator {
 
-    public static int range(Airport org, Airport des) {
+    public static int destance(Airport org, Airport des) {
         double lat1 = org.getCoordinate()[0];
         double lat2 = des.getCoordinate()[0];
         double lon1 = org.getCoordinate()[1];
@@ -25,5 +26,13 @@ public class Calculator {
 
     private static double rad2deg(double rad) {
         return (rad * 180 / Math.PI);
+    }
+
+    public static boolean reachable(Airport org, Airport des, Aircraft aircraft) {
+        if (aircraft.getRange() > destance(org, des)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
