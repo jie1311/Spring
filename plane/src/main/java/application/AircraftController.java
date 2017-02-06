@@ -13,7 +13,6 @@ import repositories.AircraftRepository;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
-import java.util.Collections;
 
 @Controller
 public class AircraftController {

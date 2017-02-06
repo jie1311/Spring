@@ -39,9 +39,17 @@ public class CompareCotroller {
         if (Calculator.reachable(org, des, aircraft)) {
             model.addAttribute("reachable", "Yes.");
         } else {
-            List route = searchResult(org, org, des, aircraft, new ArrayList<>());
+            List searched = new ArrayList<>();
+            searched.add(org);
+            List<Airport> route = searchResult(org, des, aircraft, searched, new ArrayList<>());
+            while (!(route.isEmpty() || Calculator.reachable(route.get(route.size() - 1), org, aircraft))) {
+                searched.clear();
+                searched.add(org);
+                route.addAll(searchResult(org, route.get(route.size() - 1), aircraft, searched, new ArrayList<>()));
+            }
             String routeString = "";
-            for (Airport via : (ArrayList<Airport>) route) {
+            for (int i = route.size() - 1; i >= 0; i--) {
+                Airport via = route.get(i);
                 routeString += String.format("-%s", via.getIataCode());
             }
             if (route.isEmpty()){
@@ -79,21 +87,29 @@ public class CompareCotroller {
         return airports;
     }
 
-    private List<Airport> searchResult(Airport org, Airport via, Airport des, Aircraft aircraft, List result) {
-        List<Airport> available = reachableAirports(via, aircraft);
+    private List<Airport> searchResult(Airport org, Airport des, Aircraft aircraft, List searched, List result) {
+        List<Airport> available = reachableAirports(org, aircraft);
         boolean found = false;
-        for (Airport via2 : available) {
-            if (des.getId().equals(via2.getId())) {
-                result.add(via);
+        for (Airport via : available) {
+            if (via.getId().equals(des.getId())) {
                 found = true;
+                result.add(org);
                 break;
             }
         }
         if (!found) {
-            for (Airport via2 : available){
-                if (!org.getId().equals(via2.getId())) {
-                    searchResult(org, via2, des, aircraft, result);
-                    break;
+            out: for (Airport via : available) {
+                boolean origin = false;
+                in: for (Airport srd : (ArrayList<Airport>) searched) {
+                    if (srd.getId().equals(via.getId())) {
+                        origin = true;
+                        break in;
+                    }
+                }
+                if (!origin) {
+                    searched.add(via);
+                    searchResult(via, des,aircraft,searched, result);
+                    break out;
                 }
             }
         }

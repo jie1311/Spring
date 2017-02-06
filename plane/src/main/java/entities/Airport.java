@@ -2,6 +2,8 @@ package entities;
 
 import org.springframework.data.annotation.Id;
 
+import java.util.Objects;
+
 public class Airport {
 
     @Id
@@ -54,5 +56,24 @@ public class Airport {
 
     public String getAirport() {
         return String.format("%s %s", iataCode, city);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(iataCode, city, coordinate);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        } else if (obj instanceof Airport) {
+            return false;
+        } else {
+            Airport airport = (Airport) obj;
+            return coordinate.equals(airport.getCoordinate()) &&
+                    Objects.equals(iataCode, airport.getIataCode()) &&
+                    Objects.equals(city, airport.getCity());
+        }
     }
 }
