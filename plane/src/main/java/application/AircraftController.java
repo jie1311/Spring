@@ -37,7 +37,8 @@ public class AircraftController {
             repository.save(new Aircraft(aircraftForm.getManufacturer().trim(),
                                          aircraftForm.getModel().trim(),
                                          aircraftForm.getSubModel().trim(),
-                                         Integer.valueOf(aircraftForm.getRange())));
+                                         Integer.valueOf(aircraftForm.getRange()),
+                                         Integer.valueOf(aircraftForm.getCapacity())));
             model.addAttribute("added", "Aircraft added.");
         } else {
             model.addAttribute("added", "Aircraft not added.");

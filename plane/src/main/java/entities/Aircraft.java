@@ -11,15 +11,17 @@ public class Aircraft {
     private String model;
     private String subModel;
     private int range;
+    private int capacity;
 
     public Aircraft() {
     }
 
-    public Aircraft(String manufacturer, String model, String subModel, int range) {
+    public Aircraft(String manufacturer, String model, String subModel, int range, int capacity) {
         this.manufacturer = manufacturer;
         this.model = model;
         this.subModel = subModel;
         this.range = range;
+        this.capacity = capacity;
     }
 
     public String getId() {
@@ -56,6 +58,14 @@ public class Aircraft {
 
     public void setRange(int range) {
         this.range = range;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public String getType() {

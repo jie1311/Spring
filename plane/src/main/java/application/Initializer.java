@@ -43,10 +43,10 @@ public class Initializer implements CommandLineRunner {
     public void aircraftInitial() {
         aircraftRepository.deleteAll();
 
-        aircraftRepository.save(new Aircraft("Airbus", "A350", "900", 15000));
-        aircraftRepository.save(new Aircraft("Airbus", "A350", "900ULR", 16120));
-        aircraftRepository.save(new Aircraft("Airbus", "A350", "1000", 14800));
-        aircraftRepository.save(new Aircraft("Boeing", "777", "300ER", 13650));
+        aircraftRepository.save(new Aircraft("Airbus", "A350", "900", 15000, 325));
+        aircraftRepository.save(new Aircraft("Airbus", "A350", "900ULR", 16120, 325));
+        aircraftRepository.save(new Aircraft("Airbus", "A350", "1000", 14800, 366));
+        aircraftRepository.save(new Aircraft("Boeing", "777", "300ER", 13650,365));
 
 
     }

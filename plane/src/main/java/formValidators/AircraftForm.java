@@ -16,6 +16,9 @@ public class AircraftForm {
     @NotNull
     private String range;
 
+    @NotNull
+    private String capacity;
+
     public AircraftForm() {
     }
 
@@ -49,5 +52,13 @@ public class AircraftForm {
 
     public void setRange(String range) {
         this.range = range;
+    }
+
+    public String getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(String capacity) {
+        this.capacity = capacity;
     }
 }

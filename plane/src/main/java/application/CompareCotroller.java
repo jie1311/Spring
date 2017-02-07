@@ -36,8 +36,10 @@ public class CompareCotroller {
         Aircraft aircraft = aircraftRepository.findById(compareForm.getAircraftId());
         Airport org = airportRepository.findById(compareForm.getOrgAirportId());
         Airport des = airportRepository.findById(compareForm.getDesAirportId());
+        String routeString = "";
         if (Calculator.reachable(org, des, aircraft)) {
-            model.addAttribute("reachable", "Yes.");
+            routeString = String.format("Yes. %s-%s is available.",org.getIataCode(), des.getIataCode());
+            model.addAttribute("reachable", routeString);
         } else {
             List searched = new ArrayList<>();
             searched.add(org);
@@ -47,7 +49,6 @@ public class CompareCotroller {
                 searched.add(org);
                 route.addAll(searchResult(org, route.get(route.size() - 1), aircraft, searched, new ArrayList<>()));
             }
-            String routeString = "";
             for (int i = route.size() - 1; i >= 0; i--) {
                 Airport via = route.get(i);
                 routeString += String.format("-%s", via.getIataCode());
@@ -55,7 +56,7 @@ public class CompareCotroller {
             if (route.isEmpty()){
                 routeString = "No.";
             } else {
-                routeString = String.format("No. %s%s-%s is available.",org.getIataCode(), routeString, des.getIataCode());
+                routeString = String.format("No. However, %s%s-%s is available.",org.getIataCode(), routeString, des.getIataCode());
             }
             model.addAttribute("reachable", routeString);
         }
