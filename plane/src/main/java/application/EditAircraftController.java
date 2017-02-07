@@ -33,7 +33,6 @@ public class EditAircraftController {
                     editAircraftForm.getManufacturer(),
                     editAircraftForm.getModel(),
                     editAircraftForm.getSubModel()).isEmpty()) {
-
                 repository.save(new Aircraft(editAircraftForm.getManufacturer().trim(),
                         editAircraftForm.getModel().trim(),
                         editAircraftForm.getSubModel().trim(),
