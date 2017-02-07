@@ -22,6 +22,9 @@ public class EditAircraftForm {
     @NotNull
     private String deletedId;
 
+    @NotNull
+    private String editId;
+
     public EditAircraftForm() {
     }
 
@@ -71,5 +74,13 @@ public class EditAircraftForm {
 
     public void setDeletedId(String deletedId) {
         this.deletedId = deletedId;
+    }
+
+    public String getEditId() {
+        return editId;
+    }
+
+    public void setEditId(String editId) {
+        this.editId = editId;
     }
 }

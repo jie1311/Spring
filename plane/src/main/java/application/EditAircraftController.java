@@ -27,7 +27,7 @@ public class EditAircraftController {
 
     @PostMapping("/editAircraft")
     public String editAircraft(@Valid EditAircraftForm editAircraftForm, BindingResult bindingResult, Model model) {
-        if (editAircraftForm.getDeletedId() == null) {
+        if (editAircraftForm.getDeletedId() == null && editAircraftForm.getEditId() == null) {
             //Add
             if (repository.findByManufacturerAndModelAndSubModel(
                     editAircraftForm.getManufacturer(),
@@ -43,7 +43,7 @@ public class EditAircraftController {
             } else {
                 model.addAttribute("added", "Aircraft type already exists.");
             }
-        } else {
+        } else  if (editAircraftForm.getDeletedId() != null && editAircraftForm.getEditId() == null) {
             //Delete
             try {
                 repository.findById(editAircraftForm.getDeletedId());
@@ -51,6 +51,20 @@ public class EditAircraftController {
                 model.addAttribute("deleted", "Aircraft type deleted.");
             } catch (Exception e) {
                 model.addAttribute("deleted", "Aircraft type not found in the database. Please refresh the page.");
+            }
+        } else {
+            //Edit
+            try {
+                repository.findById(editAircraftForm.getEditId());
+                repository.delete(editAircraftForm.getEditId());
+                repository.save(new Aircraft(editAircraftForm.getManufacturer().trim(),
+                        editAircraftForm.getModel().trim(),
+                        editAircraftForm.getSubModel().trim(),
+                        Integer.valueOf(editAircraftForm.getRange()),
+                        Integer.valueOf(editAircraftForm.getCapacity())));
+                model.addAttribute("edited", "Aircraft type edited.");
+            } catch (Exception e) {
+                model.addAttribute("edited", "Aircraft type not found in the database. Please refresh the page.");
             }
         }
         initialPage(model);
